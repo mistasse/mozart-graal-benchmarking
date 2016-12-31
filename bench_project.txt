@@ -1,0 +1,8 @@
+project
+#project2014.oz ../Projet2014_2/myFunctor.oz ~cwd=../Projet2014_2
+
+#graal --graal
+#nograal
+
+project2014.oz nograal
+project2014.oz graal

@@ -1,0 +1,14 @@
+pow
+#graal --graal
+#nograal
+
+#self_optim
+#no_self_optim -Doz.tail.selfcalls=false
+
+#10000 $It=10000
+#100000 $It=100000
+
+bench_pow.oz 10000
+bench_pow.oz graal 10000
+bench_pow.oz 100000
+bench_pow.oz graal 100000

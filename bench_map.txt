@@ -1,0 +1,15 @@
+map
+#graal --graal
+#nograal
+
+#self_optim
+#no_self_optim -Doz.tail.selfcalls=false
+#no_osr -Doz.tail.selfcalls.osr=false
+
+#easy $N=100 $It=100 $Name=easy
+#hard $N=400 $It=1000 $Name=hard
+
+bench_map.oz graal no_self_optim easy
+bench_map.oz graal self_optim easy
+bench_map.oz graal no_self_optim hard
+bench_map.oz graal self_optim hard
