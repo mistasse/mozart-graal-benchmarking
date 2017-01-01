@@ -116,7 +116,7 @@ class TestSuite:
     def bcmd_to_fcmd(self, bcmd):
         cmd, tpl_vars, kwargs = bcmd
         ozfile = cmd[0]
-        cmd = [self.oz, *cmd[1:], self.executing(ozfile)]
+        cmd = [kwargs.pop("oz", self.oz), *cmd[1:], self.executing(ozfile)]
         return FinalCommand(ozfile, cmd, tpl_vars, kwargs)
 
     def init_files(self):

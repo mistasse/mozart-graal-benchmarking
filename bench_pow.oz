@@ -18,7 +18,7 @@ define
     end
    end
    `$Pow` = MyPow
-   `$It`
+   `$It` = 50
    A = {NewCell 0}
    for R in 1..`$It` do
       local
