@@ -17,6 +17,7 @@ define
       {Pow B E 1}
     end
    end
+   `$Pow` = MyPow
    `$It`
    A = {NewCell 0}
    for R in 1..`$It` do
@@ -25,7 +26,7 @@ define
       in
          T0={Time}
             for Y in 1..10 do
-              A := {Pow Y 7}
+              A := {`$Pow` Y 7}
             end
          T1={Time}
          {Show `$It`#" --- "#(T1-T0)}

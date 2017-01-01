@@ -11,5 +11,7 @@ map
 
 bench_map.oz graal no_self_optim easy
 bench_map.oz graal self_optim easy
+bench_map.oz graal self_optim no_osr easy
 bench_map.oz graal no_self_optim hard
 bench_map.oz graal self_optim hard
+bench_map.oz graal self_optim no_osr hard
