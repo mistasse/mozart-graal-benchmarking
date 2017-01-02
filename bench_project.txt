@@ -1,8 +1,10 @@
 project
-#project2014.oz ../Projet2014_2/myFunctor.oz ~cwd=../Projet2014_2
-
+#mozart2 ~oz=../benchmarking/mozart2.py
 #graal --graal
 #nograal
 
+#project2014.oz ../Projet2014_2/myFunctor.oz ~cwd=../Projet2014_2
+
 project2014.oz nograal
 project2014.oz graal
+%project2014.oz mozart2

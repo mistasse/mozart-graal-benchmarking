@@ -1,0 +1,9 @@
+nothing
+#mozart2 ~oz=./mozart2.py
+#graal --graal
+
+#bench_nothing.oz bench_nothing.oz $It=100000
+
+bench_nothing.oz mozart2
+bench_nothing.oz
+bench_nothing.oz graal
