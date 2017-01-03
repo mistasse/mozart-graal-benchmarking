@@ -1,0 +1,14 @@
+flatten
+#mozart2 ~oz=./mozart2.py
+#graal --graal
+
+#hot $Hot=true
+
+#easy $Name=easy $N=10 $It=100 $Depth=C
+#hard $Name=hard $N=100 $It=1000 $Depth=C hot
+
+bench_flatten.oz graal easy
+bench_flatten.oz mozart2 easy
+
+bench_flatten.oz graal hard
+bench_flatten.oz mozart2 hard
