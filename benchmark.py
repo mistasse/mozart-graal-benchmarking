@@ -99,7 +99,11 @@ class TestSuite:
                 self.macros[split[0]] = expand_macros(split[1:], self.macros)
             elif self.skip_line_re.match(cmd) is None:
                 self.commands.append(cmd)
-        self.bcmds = [parse_args(expand_macros(line.split(" "), self.macros)) for line in self.commands]
+        self.bcmds = [parse_args(expand_macros(line[1:].split(" "), self.macros)) for line in self.commands if line.startswith("!")]
+        if not self.bcmds:  # There is no prioritized commands, commands ok
+            self.bcmds = [parse_args(expand_macros(line.split(" "), self.macros)) for line in self.commands]
+        else:  # Only keep prioritized commands, bcmds ok
+            self.commands = [line[1:] for line in self.commands if line.startswith("!")]
         self.dirname = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")+"_"+name
         self.dir = Options.resdir + self.dirname
         self.fcmds = [self.bcmd_to_fcmd(bcmd) for bcmd in self.bcmds]
