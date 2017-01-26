@@ -28,6 +28,7 @@ def extract(log):
     for line in log:
         if line.startswith(Options.section):
             section = line[len(Options.section):]
+            section = " ".join(n for n in section.split(" ") if not n.startswith("%"))
             current = defaultdict(list)
             result[section] = current
         else:

@@ -86,6 +86,20 @@ class FinalCommand(namedtuple("FinalCommand", "file, cmd, tpl_vars, kwargs")):
     pass
 
 
+def handle_pre_commands(list_, sep=","):
+    base = []
+    commands, current = [], None
+    for p in list_:
+        if p == sep:
+            current = []
+            commands.append(current)
+        elif current is None:
+            base.append(p)
+        else:
+            current.append(p)
+    return base, commands
+
+
 class TestSuite:
 
     skip_line_re = re.compile("^( *|%.*)$")
@@ -120,6 +134,9 @@ class TestSuite:
     def bcmd_to_fcmd(self, bcmd):
         cmd, tpl_vars, kwargs = bcmd
         ozfile = cmd[0]
+        cmd, pre_commands = handle_pre_commands(cmd)
+        if pre_commands:
+            kwargs["pre_cmds"] = pre_commands
         cmd = [kwargs.pop("oz", self.oz), *cmd[1:], self.executing(ozfile)]
         return FinalCommand(ozfile, cmd, tpl_vars, kwargs)
 
@@ -137,6 +154,11 @@ class TestSuite:
         lines = sub_tpl_vars(lines, tpl_vars)
         with open(self.executing(ozfile), "w") as oozfile:
             oozfile.write("\n".join(lines))
+
+        pre_commands = kwargs.pop("pre_cmds", None)
+        if pre_commands is not None:
+            for pre_cmd in pre_commands:
+                run(pre_cmd)
 
         return run(cmd, **kwargs)
 
