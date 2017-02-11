@@ -1,6 +1,6 @@
 project
 
-#project2014.oz ../Projet2014_2/myFunctor.oz ~cwd=../Projet2014_2
+#project2014.oz ../OzProjet2014/myFunctor.oz ~cwd=../OzProjet2014/
 
 project2014.oz mozart2
 project2014.oz %clean

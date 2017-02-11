@@ -1,6 +1,6 @@
 nlinks
 
-#project2014.oz ../Projet2014_2/myFunctor.oz ~cwd=../Projet2014_2
+#project2014.oz ../OzProjet2014/myFunctor.oz ~cwd=../OzProjet2014
 #%nlinks -Doz.print.nlinks=nlinks
 
 #feasy $Name=easy $N=10 $It=100 $Depth=C

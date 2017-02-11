@@ -152,7 +152,7 @@ class TestSuite:
         with open(ozfile, "r") as iozfile:
             lines = iozfile.read().splitlines()
         lines = sub_tpl_vars(lines, tpl_vars)
-        with open(self.executing(ozfile), "w") as oozfile:
+        with open(kwargs.get("cwd", ".")+"/"+self.executing(ozfile), "w") as oozfile:
             oozfile.write("\n".join(lines))
 
         pre_commands = kwargs.pop("pre_cmds", None)

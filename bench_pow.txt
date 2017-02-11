@@ -2,13 +2,15 @@ pow
 
 #javapow $Pow=Pow
 
-#easy $It=10000
-#hard $It=100000
+#10000 $It=10000
+#100000 $It=100000
 
 bench_pow.oz 10000
 bench_pow.oz mozart2 10000
 bench_pow.oz graal 10000
+
 bench_pow.oz 100000
+bench_pow.oz mozart2 100000
 bench_pow.oz graal 100000
 bench_pow.oz javapow 100000
 bench_pow.oz javapow graal 100000
