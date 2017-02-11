@@ -1,17 +1,18 @@
 flatten
-#mozart2 ~oz=./mozart2.py
-#graal --graal
-#%clean , rm ../Main.image
-
 #hot $Hot=true
+#base_flatten $Flatten=Flatten
 
 #easy $Name=easy $N=10 $It=100 $Depth=C
 #hard $Name=hard $N=100 $It=1000 $Depth=C hot
 #low_osr -Dgraal.TruffleOSRCompilationThreshold=1000
 
 bench_flatten.oz graal easy %clean
+bench_flatten.oz graal easy base_flatten %clean
+bench_flatten.oz graal easy no_recinlining %clean
 bench_flatten.oz mozart2 easy
 
 bench_flatten.oz graal hard %clean
+bench_flatten.oz graal hard base_flatten %clean
+bench_flatten.oz graal hard no_recinlining %clean
 bench_flatten.oz mozart2 hard
-bench_flatten.oz graal hard low_osr %clean
+%bench_flatten.oz graal hard low_osr %clean

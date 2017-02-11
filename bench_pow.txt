@@ -1,14 +1,9 @@
 pow
-#mozart2 ~oz=./mozart2.py
-#graal --graal
-#nograal
 
-#self_optim
-#no_self_optim -Doz.tail.selfcalls=false
 #javapow $Pow=Pow
 
-#10000 $It=10000
-#100000 $It=100000
+#easy $It=10000
+#hard $It=100000
 
 bench_pow.oz 10000
 bench_pow.oz mozart2 10000

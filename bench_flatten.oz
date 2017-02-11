@@ -3,6 +3,24 @@ import
    System(showInfo:Show)
    Boot_Time(getMonotonicTime: Time) at 'x-oz://boot/Time'
 define
+    local
+       fun {DoFlatten Xs Start End}
+          case Xs of
+             X|Xr then S S1 in
+             if {DoFlatten X S S1}
+             then S=Start {DoFlatten Xr S1 End}
+             else S2 in Start=X|S2 {DoFlatten Xr S2 End}
+             end
+          [] nil then Start=End true
+          else false
+          end
+       end
+    in
+       fun {MyFlatten X}
+          Start in if {DoFlatten X Start nil} then Start else X end
+       end
+    end
+    `$Flatten` = MyFlatten
    fun {Times L T}
       if T == 0 then
          nil
@@ -26,7 +44,7 @@ define
          T0 T1
       in
          T0={Time}
-         _ = {Flatten `$Depth`}
+         _ = {`$Flatten` `$Depth`}
          T1={Time}
          {Show `$Name`#" --- "#(T1-T0)}
       end
@@ -37,7 +55,7 @@ define
            T0 T1
         in
            T0={Time}
-           _ = {Flatten `$Depth`}
+           _ = {`$Flatten` `$Depth`}
            T1={Time}
            {Show `$Name`#"_hot --- "#(T1-T0)}
         end

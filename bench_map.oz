@@ -25,7 +25,7 @@ define
     else I|{Gen I-1} end
   end
 
-  fun {Map L F}
+  fun {Map1 L F}
     case L of H|T then
       {F H}|{Map T F}
     [] nil then nil end
@@ -40,6 +40,7 @@ define
   end
   `$N` = 400
   `$It` = 1000
+  `$Map` = Map
   `$Name` = "default"
   L = {Gen `$N`}
 
@@ -50,9 +51,7 @@ define
       in
         T0 = {Time}
         A := {Map L fun {$ X} {Add 3 X} end}
-        A := {Map2 L fun {$ X} {Add 3 X} end}
         A := {Map L fun {$ X} {Sub 3 X} end}
-        A := {Map2 L fun {$ X} {Sub 3 X} end}
         T1 = {Time}
         {Show `$Name`#' --- '#(T1-T0)}
       end

@@ -1,0 +1,24 @@
+nlinks
+
+#project2014.oz ../Projet2014_2/myFunctor.oz ~cwd=../Projet2014_2
+#%nlinks -Doz.print.nlinks=nlinks
+
+#feasy $Name=easy $N=10 $It=100 $Depth=C
+#fhard $Name=hard $N=100 $It=1000 $Depth=C
+
+#p10000 $It=10000
+#p100000 $It=100000
+
+#bench_nothing.oz bench_nothing.oz $It=100000
+
+#measy $N=100 $It=100 $Name=easy
+#mhard $N=400 $It=1000 $Name=hard
+
+project2014.oz graal %nlinks
+bench_flatten.oz feasy %nlinks
+bench_flatten.oz graal fhard %nlinks
+bench_pow.oz p10000 %nlinks
+bench_pow.oz graal p100000 %nlinks
+bench_map.oz measy %nlinks
+bench_map.oz graal mhard %nlinks
+bench_nothing.oz %nlinks

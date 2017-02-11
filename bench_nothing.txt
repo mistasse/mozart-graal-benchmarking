@@ -1,6 +1,4 @@
 nothing
-#mozart2 ~oz=./mozart2.py
-#graal --graal
 
 #bench_nothing.oz bench_nothing.oz $It=100000
 

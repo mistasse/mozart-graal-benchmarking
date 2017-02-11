@@ -9,11 +9,13 @@ from benchmark import Options
 __all__ = [
     "get_log",
     "extract",
-    "to_mat",
     "Serie",
     "noop_nosections",
     "SubSerie",
     "merge",
+
+    "asis",
+    "nano_mat"
 ]
 
 
@@ -41,32 +43,38 @@ def extract(log):
     return result
 
 
-def to_mat(dic, label, sections=None):
+def to_list(dic, label, sections=None):
     keys = list(dic.keys())
-    mat = []
+    lst = []
     if sections is None:
         sections = [k for k in keys if dic[k].get(label, None) is not None]
+    else:
+        sections = [keys[section] if isinstance(section, int) else section for section in sections]
+
     for section in sections:
-        if isinstance(section, int):
-            section = keys[section]
-        mat.append(dic[section][label])
-    return np.array(mat, dtype="float64"), sections
+        lst.append(dic[section][label])
+    return lst, sections
+
+
+def nano_mat(lst):
+    return np.array(lst, dtype="float64") * 1e-9
+
+
+def asis(lst):
+    return lst
 
 
 class Serie:
     def __init__(self, serie):
         self.serie = extract(get_log(serie))
 
-    def get(self, label, sections=None, *, scale=1e-9):
+    def get(self, label, sections=None, *, conv=nano_mat):
         if isinstance(label, tuple):
-            return tuple(self.get(l, sections, scale=scale) for l in label)
-
-        mat, sections = to_mat(self.serie, label, sections)
-        return SubSerie(mat*scale, sections)
+            return tuple(self.get(l, sections, conv=conv) for l in label)
+        lst, sections = to_list(self.serie, label, sections)
+        return SubSerie(conv(lst), sections)
 
     def __getitem__(self, label):
-        if isinstance(label, tuple):
-            return tuple(self.get(l) for l in label)
         return self.get(label)
 
 
@@ -93,6 +101,24 @@ class SubSerie:
     def plot(self, sections=None, *, legend=1, yscale="log"):
         for m in self.mat:
             plt.plot(m)
+        if yscale is not None:
+            plt.yscale(yscale)
+        if legend is not None:
+            plt.legend(sections if sections is not None else self.sections, loc=legend)
+        return self
+
+    @noop_nosections()
+    def hist(self, sections=None, *, yscale="log", legend=1, bins=None, stacked=False):
+        min_, max_ = min(self.mat[0]), max(self.mat[0])
+        for m in self.mat:
+            mi, ma = min(m), max(m)
+            if mi < min_:
+                min_ = mi
+            if ma > max_:
+                max_ = ma
+        # default: from min-0.5 to max+0.5 with max_ - min_ + 1 bins
+        bins = np.linspace(min_, max_+1, max_ - min_ + 2 if bins is None else bins+1)-0.5
+        plt.hist(self.mat, bins, stacked=stacked)
         if yscale is not None:
             plt.yscale(yscale)
         if legend is not None:
