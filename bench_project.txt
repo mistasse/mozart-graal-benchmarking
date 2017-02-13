@@ -1,8 +1,8 @@
 project
 
 #project2014.oz ../OzProjet2014/myFunctor.oz ~cwd=../OzProjet2014/
+#no_unlink -Doz.free.links=false
 
 project2014.oz mozart2
-project2014.oz %clean
 project2014.oz graal %clean
-project2014.oz graal no_recinlining %clean
+project2014.oz graal no_unlink %clean
