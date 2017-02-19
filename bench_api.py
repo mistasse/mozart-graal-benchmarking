@@ -15,7 +15,10 @@ __all__ = [
     "merge",
 
     "asis",
-    "nano_mat"
+    "nano_mat",
+
+    "mean",
+    "first",
 ]
 
 
@@ -65,15 +68,34 @@ def asis(lst):
     return lst
 
 
+def mean(lst):
+    s = lst[0]
+    for l in lst[1:]:
+        s += l
+    return s / len(lst)
+
+
+def first(lst):
+    return lst[0]
+
+
 class Serie:
     def __init__(self, serie, n=0):
-        self.serie = extract(get_log(serie, n))
+        self.n = n
+        if isinstance(n, int):
+            self.serie = [extract(get_log(serie, n))]
+        else:
+            self.serie = [extract(get_log(serie, i)) for i in n]
 
-    def get(self, label, sections=None, *, conv=nano_mat):
+    def get(self, label, sections=None, *, conv=nano_mat, agg=asis):
         if isinstance(label, tuple):
-            return tuple(self.get(l, sections, conv=conv) for l in label)
-        lst, sections = to_list(self.serie, label, sections)
-        return SubSerie(conv(lst), sections)
+            return tuple(self.get(l, sections, conv=conv, agg=agg) for l in label)
+        lst, sections = to_list(first(self.serie), label, sections)
+        if not isinstance(self.n, int):
+            lst = [lst]
+            for serie in self.serie[1:]:
+                lst.append(to_list(serie, label, sections)[0])
+        return SubSerie(agg(conv(lst)), sections)
 
     def __getitem__(self, label):
         return self.get(label)
