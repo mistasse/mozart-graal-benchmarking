@@ -19,8 +19,9 @@ __all__ = [
 ]
 
 
-def get_log(serie):
-    with open(Options.resdir+"last_"+serie+"/output.txt", "r") as f:
+def get_log(serie, n=0):
+    n = str(n) if n > 0 else ""
+    with open(Options.resdir+"last_"+serie+"/output{}.txt".format(n), "r") as f:
         return f.read().splitlines()
 
 
@@ -65,8 +66,8 @@ def asis(lst):
 
 
 class Serie:
-    def __init__(self, serie):
-        self.serie = extract(get_log(serie))
+    def __init__(self, serie, n=0):
+        self.serie = extract(get_log(serie, n))
 
     def get(self, label, sections=None, *, conv=nano_mat):
         if isinstance(label, tuple):
