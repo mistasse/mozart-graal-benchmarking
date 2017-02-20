@@ -75,6 +75,13 @@ def mean(lst):
     return s / len(lst)
 
 
+def geomean(lst):
+    s = lst[0]
+    for l in lst[1:]:
+        s *= l
+    return np.power(s, 1/len(lst))
+
+
 @instantiate
 class nth:
     def __getitem__(self, item):
