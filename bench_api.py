@@ -75,8 +75,14 @@ def mean(lst):
     return s / len(lst)
 
 
-def first(lst):
-    return lst[0]
+@instantiate
+class nth:
+    def __getitem__(self, item):
+        def select(e):
+            if isinstance(item, int):
+                return [e[item]]
+            return e[item]
+        return select
 
 
 class Serie:
@@ -87,15 +93,15 @@ class Serie:
         else:
             self.serie = [extract(get_log(serie, i)) for i in n]
 
-    def get(self, label, sections=None, *, conv=nano_mat, agg=asis):
+    def get(self, label, sections=None, *, conv=nano_mat, agg=first):
         if isinstance(label, tuple):
             return tuple(self.get(l, sections, conv=conv, agg=agg) for l in label)
-        lst, sections = to_list(first(self.serie), label, sections)
-        if not isinstance(self.n, int):
-            lst = [lst]
-            for serie in self.serie[1:]:
-                lst.append(to_list(serie, label, sections)[0])
-        return SubSerie(agg(conv(lst)), sections)
+        series = nth[self.n](self.serie)
+        lst, sections = to_list(series[0], label, sections)
+        lst = [lst]
+        for serie in self.series:
+            lst.append(to_list(serie, label, sections)[0])
+        return SubSerie(agg([conv(l) for l in lst]), sections)
 
     def __getitem__(self, label):
         return self.get(label)
