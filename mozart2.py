@@ -4,7 +4,7 @@ import sys
 
 from os import environ
 
-mozart = "/Applications/Mozart2.app/Contents/Resources/bin/"
+mozart = "/home/max/mozart2/bin/"
 
 env = environ.copy()
 env["PATH"] = env["PATH"]+":"+mozart

@@ -18,6 +18,7 @@ __all__ = [
     "nano_mat",
 
     "mean",
+    "geomean",
     "first",
 ]
 
@@ -82,14 +83,8 @@ def geomean(lst):
     return np.power(s, 1/len(lst))
 
 
-@instantiate
-class nth:
-    def __getitem__(self, item):
-        def select(e):
-            if isinstance(item, int):
-                return [e[item]]
-            return e[item]
-        return select
+def first(lst):
+	return lst[0]
 
 
 class Serie:
@@ -103,10 +98,9 @@ class Serie:
     def get(self, label, sections=None, *, conv=nano_mat, agg=first):
         if isinstance(label, tuple):
             return tuple(self.get(l, sections, conv=conv, agg=agg) for l in label)
-        series = nth[self.n](self.serie)
-        lst, sections = to_list(series[0], label, sections)
+        lst, sections = to_list(self.serie[0], label, sections)
         lst = [lst]
-        for serie in self.series:
+        for serie in self.serie[1:]:
             lst.append(to_list(serie, label, sections)[0])
         return SubSerie(agg([conv(l) for l in lst]), sections)
 

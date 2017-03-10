@@ -1,6 +1,6 @@
 #mozart2 ~oz=../benchmarking/mozart2.py
 
-#%clean , rm ../Main.image
+#%clean -Doz.serializer=false
 
 #graal --graal
 #no_graal
