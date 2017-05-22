@@ -20,7 +20,7 @@ define
           Start in if {DoFlatten X Start nil} then Start else X end
        end
     end
-    `$Flatten` = MyFlatten
+    `$Flatten` = Flatten
    fun {Times L T}
       if T == 0 then
          nil
@@ -32,10 +32,14 @@ define
    `$It` = 100
    `$BN` = 3
    `$CN` = 3
+   `$DN` = 3
+   `$EN` = 3
    `$Hot` = false
    A = {Times x `$N`}
    B = {Times A `$BN`}
    C = {Times B `$CN`}
+   D = {Times C `$DN`}
+   E = {Times D `$EN`}
    `$Depth` = C
    `$Name` = ""
 

@@ -1,6 +1,8 @@
-flatten
+% flatten
+
 #hot $Hot=true
-#base_flatten $Flatten=Flatten
+#base_flatten
+#cust_flatten $Flatten=MyFlatten
 
 #easy $Name=easy $N=10 $It=100 $Depth=C
 #hard $Name=hard $N=100 $It=1000 $Depth=C hot
@@ -11,8 +13,8 @@ bench_flatten.oz graal easy base_flatten %clean
 bench_flatten.oz graal easy no_recinlining %clean
 bench_flatten.oz mozart2 easy
 
-bench_flatten.oz graal hard %clean
+bench_flatten.oz graal hard cust_flatten %clean
 bench_flatten.oz graal hard base_flatten %clean
-bench_flatten.oz graal hard no_recinlining %clean
-bench_flatten.oz mozart2 hard
+bench_flatten.oz graal hard cust_flatten no_recinlining %clean
+bench_flatten.oz mozart2 hard base_flatten
 %bench_flatten.oz graal hard low_osr %clean

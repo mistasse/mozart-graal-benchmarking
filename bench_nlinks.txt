@@ -1,10 +1,10 @@
-nlinks
+% nlinks
 
 #project2014.oz ../OzProjet2014/myFunctor.oz ~cwd=../OzProjet2014
-#%nlinks -Doz.print.nlinks=nlinks
+#%nlinks -Doz.print.nlinks=true -Dgraal.TruffleMaximumRecursiveInlining=0
 
 #feasy $Name=easy $N=10 $It=100 $Depth=C
-#fhard $Name=hard $N=100 $It=1000 $Depth=C
+#fhard $Name=hard $N=40 $It=1000 $Depth=E
 
 #p10000 $It=10000
 #p100000 $It=100000
@@ -12,13 +12,26 @@ nlinks
 #bench_nothing.oz bench_nothing.oz $It=100000
 
 #measy $N=100 $It=100 $Name=easy
-#mhard $N=400 $It=1000 $Name=hard
+#mhard $N=10 $It=1000 $Name=hard
 
-project2014.oz graal %nlinks
-bench_flatten.oz feasy %nlinks
-bench_flatten.oz graal fhard %nlinks
-bench_pow.oz p10000 %nlinks
-bench_pow.oz graal p100000 %nlinks
-bench_map.oz measy %nlinks
-bench_map.oz graal mhard %nlinks
-bench_nothing.oz %nlinks
+pow graal
+#project2014 project2014.oz
+project2014 graal %nlinks
+
+#flatten bench_flatten.oz
+flatten feasy %nlinks
+flatten graal fhard %nlinks
+
+#sieve bench_sieve.oz
+sieve graal %nlinks
+
+#pow bench_pow.oz
+pow p10000 %nlinks
+pow graal p100000 %nlinks
+
+#map bench_map.oz
+map measy %nlinks
+map graal mhard %nlinks
+
+#nothing bench_nothing.oz
+nothing %nlinks

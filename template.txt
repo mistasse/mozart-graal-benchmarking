@@ -1,0 +1,19 @@
+NAME
+define(`inc', `include(bench_$1.txt)')dnl
+
+#mozart2 ~oz=../benchmarking/mozart2.py
+
+#%clean -Doz.serializer=false
+
+#graal --graal
+#no_graal
+#truffle
+
+#recinlining
+#self_optim
+#self_osr
+
+#no_recinlining -Dgraal.TruffleMaximumRecursiveInlining=0
+#no_self_optim -Doz.tail.selfcalls=false
+#no_self_osr -Doz.tail.selfcalls.osr=false
+inc(NAME)dnl

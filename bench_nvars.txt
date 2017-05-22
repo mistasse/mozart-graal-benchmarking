@@ -1,4 +1,4 @@
-nvars
+% nvars
 
 #project2014.oz ../OzProjet2014/myFunctor.oz ~cwd=../OzProjet2014
 #%nvars -Doz.print.nvars=true

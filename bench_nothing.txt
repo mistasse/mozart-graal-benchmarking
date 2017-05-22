@@ -1,4 +1,4 @@
-nothing
+% nothing
 
 #bench_nothing.oz bench_nothing.oz $It=100000
 
