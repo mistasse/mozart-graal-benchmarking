@@ -5,6 +5,9 @@
 #boundedbuffer_buffered $BoundedBuffer=true
 #boundedbuffer_unbuffered $BoundedBuffer=false
 
+#boundedbuffer_!wait $Process=Process
+#boundedbuffer_wait $Process=ProcessWait
+
 %%% FLATTEN
 #flatten_base
 #flatten_custom $Flatten=MyFlatten

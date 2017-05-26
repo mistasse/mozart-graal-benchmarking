@@ -1,12 +1,15 @@
 % boundedbuffer -- OK!
 #buffered boundedbuffer_buffered
 #unbuffered boundedbuffer_unbuffered
+#%wait boundedbuffer_!wait
+#wait boundedbuffer_wait
 
 #bounded_buffer bench_boundedbuffer.oz boundedbuffer_default
 
 bounded_buffer buffered mozart1
 %bounded_buffer buffered mozart2
 bounded_buffer buffered graal
+bounded_buffer buffered graal wait
 
 #%mozart1 mozart1
 bounded_buffer unbuffered %mozart1
