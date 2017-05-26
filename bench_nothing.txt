@@ -1,7 +1,8 @@
-% nothing
+% nothing -- OK!
 
-#bench_nothing.oz bench_nothing.oz $It=100000
+#bench_nothing bench_nothing.oz nothing_default
 
-bench_nothing.oz mozart2
-bench_nothing.oz
-bench_nothing.oz graal
+bench_nothing mozart1
+bench_nothing mozart2
+bench_nothing !graal
+bench_nothing graal

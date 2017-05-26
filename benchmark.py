@@ -13,6 +13,7 @@ from tqdm import tqdm
 from datetime import datetime
 from contextlib import contextmanager
 from collections import namedtuple, defaultdict
+from codecs import decode
 
 
 class Options:
@@ -25,6 +26,15 @@ class Options:
 
 def run(cmd, **kwargs):
     p = subprocess.run(cmd, stdout=subprocess.PIPE, **kwargs)
+    if p.returncode != 0:
+        if not Args.tryagain and not Args.skiperrors:
+            print(decode(p.stdout))
+            print("Error, exiting")
+            exit(p.returncode)
+        while Args.tryagain and p.returncode != 0:
+            print(decode(p.stdout))
+            print("Error, trying again")
+            p = subprocess.run(cmd, stdout=subprocess.PIPE, **kwargs)
     return p.stdout.splitlines()
 
 
@@ -62,7 +72,7 @@ def sub_tpl_vars(lines, tpl_vars):
         original, varname = matchobj.group(0), matchobj.group(1)
         counts[varname] += 1
         if counts[varname] == 1:
-            return original
+            return "%"+original if varname in tpl_vars else original
         return tpl_vars.get(varname, original)
 
     return [tpl_var_re.sub(repl, line) for line in lines]
@@ -112,13 +122,13 @@ class TestSuite:
         self.macros, self.commands = {}, []
         for cmd in commands:
             if cmd.startswith("#"):
-                split = cmd[1:].split(" ")
+                split = cmd[1:].split()
                 self.macros[split[0]] = expand_macros(split[1:], self.macros)
             elif self.skip_line_re.match(cmd) is None:
                 self.commands.append(cmd)
-        self.bcmds = [parse_args(expand_macros(line[1:].split(" "), self.macros)) for line in self.commands if line.startswith("!")]
+        self.bcmds = [parse_args(expand_macros(line[1:].split(), self.macros)) for line in self.commands if line.startswith("!")]
         if not self.bcmds:  # There is no prioritized commands, commands ok
-            self.bcmds = [parse_args(expand_macros(line.split(" "), self.macros)) for line in self.commands]
+            self.bcmds = [parse_args(expand_macros(line.split(), self.macros)) for line in self.commands]
         else:  # Only keep prioritized commands, bcmds ok
             self.commands = [line[1:] for line in self.commands if line.startswith("!")]
         self.dirname = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")+"_"+name
@@ -186,6 +196,8 @@ class Result(namedtuple("Result", "title, output")):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-n", type=int, default=1, help="the number of times to execute the benchmark")
+    parser.add_argument("-s", "--skiperrors", action="store_true", help="continue executing though there were errors")
+    parser.add_argument("-t", "--tryagain", action="store_true", help="try executing again while there are errors")
     Args = parser.parse_args()
 
     lines = sys.stdin.read().splitlines()

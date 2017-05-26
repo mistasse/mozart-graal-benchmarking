@@ -1,7 +1,8 @@
 functor
 import
+   Application(exit:Exit)
+   MTime(time:Time diff:Diff) at 'time.ozf'
    System(showInfo:Show)
-   Boot_Time(getMonotonicTime: Time) at 'x-oz://boot/Time'
 define
     local
        fun {DoFlatten Xs Start End}
@@ -50,7 +51,7 @@ define
          T0={Time}
          _ = {`$Flatten` `$Depth`}
          T1={Time}
-         {Show `$Name`#" --- "#(T1-T0)}
+         {Show `$Name`#" --- "#{Diff T0 T1}}
       end
    end
    if `$Hot` then
@@ -61,8 +62,9 @@ define
            T0={Time}
            _ = {`$Flatten` `$Depth`}
            T1={Time}
-           {Show `$Name`#"_hot --- "#(T1-T0)}
+           {Show `$Name`#"_hot --- "#{Diff T0 T1}}
         end
      end
    end
+   {Exit 0}
 end

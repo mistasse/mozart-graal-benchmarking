@@ -1,19 +1,6 @@
 % nvars
 
 #project2014.oz ../OzProjet2014/myFunctor.oz ~cwd=../OzProjet2014
-#%nvars -Doz.print.nvars=true
-#no_direct -Doz.vars.direct=false
-
-#feasy $Name=easy $N=10 $It=100 $Depth=C
-#fhard $Name=hard $N=100 $It=1000 $Depth=C
-
-#p10000 $It=10000
-#p100000 $It=100000
-
-#bench_nothing.oz bench_nothing.oz $It=100000
-
-#measy $N=100 $It=100 $Name=easy
-#mhard $N=400 $It=1000 $Name=hard
 
 %project2014.oz graal %nvars %clean
 %project2014.oz graal no_direct %nvars %clean

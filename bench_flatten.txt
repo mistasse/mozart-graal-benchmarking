@@ -1,20 +1,21 @@
-% flatten
+% flatten -- OK!
 
-#hot $Hot=true
-#base_flatten
-#cust_flatten $Flatten=MyFlatten
+#flatten bench_flatten.oz
+#easy flatten_easy
+#hard flatten_hard
 
-#easy $Name=easy $N=10 $It=100 $Depth=C
-#hard $Name=hard $N=100 $It=1000 $Depth=C hot
-#low_osr -Dgraal.TruffleOSRCompilationThreshold=1000
+#base flatten_base
+#custom flatten_custom
 
-bench_flatten.oz graal easy %clean
-bench_flatten.oz graal easy base_flatten %clean
-bench_flatten.oz graal easy no_recinlining %clean
-bench_flatten.oz mozart2 easy
+flatten easy mozart1
+flatten easy mozart2
+flatten easy graal base
+flatten easy graal custom
+flatten easy graal custom !recinlining
 
-bench_flatten.oz graal hard cust_flatten %clean
-bench_flatten.oz graal hard base_flatten %clean
-bench_flatten.oz graal hard cust_flatten no_recinlining %clean
-bench_flatten.oz mozart2 hard base_flatten
-%bench_flatten.oz graal hard low_osr %clean
+flatten hard mozart1
+flatten hard mozart2
+flatten hard graal base
+flatten hard graal custom
+flatten hard graal custom !recinlining
+%flatten.oz graal hard low_osr

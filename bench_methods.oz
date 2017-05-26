@@ -1,7 +1,8 @@
 functor
 import
+   Application(exit:Exit)
+   MTime(time:Time diff:Diff) at 'time.ozf'
    System(showInfo:Show)
-   Boot_Time(getMonotonicTime:Time) at 'x-oz://boot/Time'
 define
 X
 X = {NewCell 0}
@@ -23,8 +24,8 @@ end
 A = {New AClass init}
 `$Rec` = w(x(y(z(a))))
 `$Name` = "otherwise"
-`$N` = 1000
-`$M` = 1000
+`$N` = 100
+`$M` = 50000
 for I in 1..`$N` do
    T0 T1 in
    {Time T0}
@@ -32,8 +33,8 @@ for I in 1..`$N` do
       {A `$Rec`}
    end
    {Time T1}
-   {Show `$Name`#" --- "#(T1-T0)}
+   {Show `$Name`#" --- "#{Diff T0 T1}}
 end
 {Show @X}
-
+{Exit 0}
 end

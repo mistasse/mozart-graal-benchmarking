@@ -1,18 +1,7 @@
 % nlinks
 
 #project2014.oz ../OzProjet2014/myFunctor.oz ~cwd=../OzProjet2014
-#%nlinks -Doz.print.nlinks=true -Dgraal.TruffleMaximumRecursiveInlining=0
-
-#feasy $Name=easy $N=10 $It=100 $Depth=C
-#fhard $Name=hard $N=40 $It=1000 $Depth=E
-
-#p10000 $It=10000
-#p100000 $It=100000
-
-#bench_nothing.oz bench_nothing.oz $It=100000
-
-#measy $N=100 $It=100 $Name=easy
-#mhard $N=10 $It=1000 $Name=hard
+#%nlinks %nlinks -Dgraal.TruffleMaximumRecursiveInlining=0
 
 pow graal
 #project2014 project2014.oz

@@ -1,21 +1,15 @@
 % project
 
-#project2014.oz ../OzProjet2014/myFunctor.oz ~cwd=../OzProjet2014/ $N=10
-#no_unlink -Doz.free.links=false
-#%nvars -Doz.print.nvars=true
-#%nvars
-#no_direct -Doz.vars.direct=false
+% Mozart 1 and 2 need precompiled Projet2014 functor
+#mozart1 mozart1 Projet2014.oz
+#mozart2 mozart2 Projet2014.oz
 
-!project2014.oz mozart2
-project2014.oz graal no_direct %nvars %clean
-project2014.oz graal %nvars %clean
-project2014.oz graal no_unlink %nvars %clean
+#project2014 ../OzProjet2014/myFunctor.oz ~cwd=../OzProjet2014/ $N=10
 
-#cache -Doz.reads.cache=true
-#!cache -Doz.reads.cache=false
-
-#filter -Doz.vars.filtering=true
-#!filter -Doz.vars.filtering=false
-
-!project2014.oz graal !filter %nvars %clean
-!project2014.oz graal filter %nvars %clean
+project2014 mozart2
+!project2014 mozart1
+!project2014 graal %gc
+project2014 graal !filter 
+project2014 graal !direct unlink
+project2014 graal direct unlink
+project2014 graal direct !unlink

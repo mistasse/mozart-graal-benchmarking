@@ -1,0 +1,41 @@
+#_mozart1 ~oz=../benchmarking/mozart1.py
+#_mozart2 ~oz=../benchmarking/mozart2.py
+#mozart1 _mozart1 time.oz
+#mozart2 _mozart2 time.oz
+
+#%gc -verbose:gc
+#%clean -Doz.serializer=false
+#!%clean -Doz.serializer=true
+#%nlinks -Doz.print.nlinks=true
+#!%nlinks
+#%nvars -Doz.print.nvars=true
+#!%nvars
+
+#graal --graal -Doz.frames.cache=0 %clean
+#!graal
+#truffle
+
+#cache  -Doz.reads.cache=true
+#!cache -Doz.reads.cache=false
+
+#direct  -Doz.vars.direct=true
+#!direct -Doz.vars.direct=false
+
+#+filter -Doz.vars.filtering=true
+#!filter -Doz.vars.filtering=false
+
+#high_osr -Dgraal
+#low_osr  -Dgraal.TruffleOSRCompilationThreshold=1000
+
+#recinlining
+#!recinlining -Dgraal.TruffleMaximumRecursiveInlining=0
+
+#self_optim  -Doz.tail.selfcalls=true
+#!self_optim -Doz.tail.selfcalls=false
+
+#self_osr  -Doz.tail.selfcalls.osr=true
+#!self_osr -Doz.tail.selfcalls.osr=false
+
+#unlink  -Doz.free.links=true
+#!unlink -Doz.free.links=false
+

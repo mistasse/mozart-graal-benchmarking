@@ -62,6 +62,10 @@ def to_list(dic, label, sections=None):
 
 
 def nano_mat(lst):
+    length = max(len(l) for l in lst)
+    for l in lst:
+        if len(l) != length:
+            l += [float("nan")] * (length-len(l))
     return np.array(lst, dtype="float64") * 1e-9
 
 
@@ -127,10 +131,16 @@ class SubSerie:
         plt.subplot(*args, **kwargs)
         return self
 
+    def grid(self):
+        plt.grid()
+        return self
+
     @noop_nosections()
-    def plot(self, sections=None, *, legend=1, yscale="log"):
+    def plot(self, sections=None, *, legend=1, xscale=None, yscale="log"):
         for m in self.mat:
             plt.plot(m)
+        if xscale is not None:
+            plt.xscale(xscale)
         if yscale is not None:
             plt.yscale(yscale)
         if legend is not None:

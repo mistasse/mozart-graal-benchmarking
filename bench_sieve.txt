@@ -1,0 +1,28 @@
+% sieve -- OK!
+#sieve bench_sieve.oz
+#graal graal !direct
+#easy   sieve_easy   $Name=easy
+#medium sieve_medium $Name=medium
+#hard   sieve_hard   $Name=hard
+
+#%lazy sieve_!lazy
+#lazy sieve_lazy
+
+#%sqrtopt sieve_!sqrtopt
+#sqrtopt sieve_sqrtopt
+
+!sieve easy graal %lazy direct
+sieve easy mozart1 %lazy
+sieve easy mozart2 %lazy
+
+!sieve medium graal %lazy direct
+sieve medium mozart1 %lazy
+sieve medium mozart2 %lazy
+
+sieve hard graal %lazy
+sieve hard mozart1 %lazy
+sieve hard mozart2 %lazy
+
+sieve hard graal sqrtopt %lazy
+sieve hard mozart1 sqrtopt %lazy
+sieve hard mozart2 sqrtopt %lazy

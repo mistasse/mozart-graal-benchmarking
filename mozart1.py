@@ -13,6 +13,10 @@ def run(cmd, **kwargs):
     print(cmd)
     subprocess.run(cmd, **kwargs)
 
+for filename in sys.argv[1:-1]:
+    if filename.endswith(".oz"):
+        run(["ozc", "-c", filename], env=env)
+
 ozfile = sys.argv[-1]
 ozffile = ozfile+"f"
 

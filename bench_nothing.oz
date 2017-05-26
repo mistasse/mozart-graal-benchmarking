@@ -1,8 +1,9 @@
 functor
 import
+   Application(exit:Exit)
+   MTime(time:Time diff:Diff) at 'time.ozf'
    System(showInfo:Show)
    Browser(browse:Browse)
-   Boot_Time(getMonotonicTime:Time) at 'x-oz://boot/Time'
 define
    `$It` = 50
    A = {NewCell 0}
@@ -13,8 +14,8 @@ define
          T0={Time}
          A := nil
          T1={Time}
-         {Show `$It`#" --- "#(T1-T0)}
+         {Show `$It`#" --- "#({Diff T0 T1})}
       end
    end
-
+   {Exit 0}
 end

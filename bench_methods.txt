@@ -1,18 +1,19 @@
-% methods
+% methods -- OK!
 
-#otherwise_4 $Name=otherwise_4 $Rec=w(x(y(z(a))))
-#otherwise_2 $Name=otherwise_2 $Rec=y(z(a))
-#otherwise_1 $Name=otherwise_1 $Rec=z(a)
-#direct $Name=direct $Rec=a
+#methods bench_methods.oz
+#direct methods_direct
 
-bench_methods.oz mozart2 direct
-bench_methods.oz graal direct -Doz.methods.cache=false
-bench_methods.oz graal direct -Doz.methods.cache=true
+methods mozart1 direct
+%methods mozart2 direct
+methods graal direct -Doz.methods.cache=false
+methods graal direct -Doz.methods.cache=true
 
-bench_methods.oz mozart2 otherwise_1
-bench_methods.oz graal otherwise_1 -Doz.methods.cache=false
-bench_methods.oz graal otherwise_1 -Doz.methods.cache=true
+methods mozart1 otherwise_1
+%methods mozart2 otherwise_1
+methods graal otherwise_1 -Doz.methods.cache=false
+methods graal otherwise_1 -Doz.methods.cache=true
 
-bench_methods.oz mozart2 otherwise_4
-bench_methods.oz graal otherwise_4 -Doz.methods.cache=false
-bench_methods.oz graal otherwise_4 -Doz.methods.cache=true
+methods mozart1 otherwise_4
+%methods mozart2 otherwise_4
+methods graal otherwise_4 -Doz.methods.cache=false
+methods graal otherwise_4 -Doz.methods.cache=true

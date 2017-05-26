@@ -1,0 +1,46 @@
+#hot $Hot=true
+
+%%% BOUNDED BUFFER
+#boundedbuffer_default $It=20 $TimeUnit=50000
+#boundedbuffer_buffered $BoundedBuffer=true
+#boundedbuffer_unbuffered $BoundedBuffer=false
+
+%%% FLATTEN
+#flatten_base
+#flatten_custom $Flatten=MyFlatten
+
+#flatten_easy $Name=easy $N=10 $It=100 $Depth=C
+#flatten_hard $Name=hard $N=1000 $It=1000 $Depth=E
+%#feasy $Name=easy $N=10 $It=100 $Depth=C
+%#fhard $Name=hard $N=40 $It=1000 $Depth=E
+
+%%% MAP
+#map_easy $N=100000  $It=50  $Name=easy
+#map_hard $N=1000000 $It=100 $Name=hard
+#map_base
+#map_pat  $Map=MapPat
+#map_feat $Map=MapFeat
+
+%%% METHODS
+#otherwise_4      $Name=otherwise_4 $Rec=w(x(y(z(a))))
+#otherwise_2      $Name=otherwise_2 $Rec=y(z(a))
+#otherwise_1      $Name=otherwise_1 $Rec=z(a)
+#methods_direct   $Name=direct      $Rec=a
+
+%%% NOTHING
+#nothing_default $It=50000
+
+%%% POW
+#pow_short $It=10000
+#pow_long  $It=100000
+
+%%% SIEVE
+#sieve_easy   $N=1000  $It=100
+#sieve_medium $N=5000  $It=200
+#sieve_hard   $N=20000 $It=100
+
+#sieve_!lazy $Sieve=Sieve
+#sieve_lazy  $Sieve=LazySieve
+
+#sieve_!sqrtopt $SqrtOpt=false
+#sieve_sqrtopt $SqrtOpt=true

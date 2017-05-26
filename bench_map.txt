@@ -1,18 +1,18 @@
-% map
+% map -- OK!
 
-#easy $N=100 $It=100 $Name=easy
-#hard $N=400 $It=1000 $Name=hard
+#map bench_map.oz
+#easy map_easy
+#hard map_hard
 
-#map_base
-#map_pat $Map=Map1
-#map_rec $Map=Map2
+map easy mozart1
+map easy mozart2
+%map easy graal !self_optim
+%map easy graal self_optim !self_osr
+map easy graal self_optim self_osr
 
-bench_map.oz graal no_self_optim easy
-bench_map.oz graal self_optim no_self_osr easy
-bench_map.oz graal self_optim easy
-bench_map.oz mozart2 easy
+map hard mozart1
+map hard mozart2
+%map hard graal !self_optim
+%map hard graal self_optim !self_osr
+map hard graal self_optim self_osr
 
-bench_map.oz graal no_self_optim hard
-bench_map.oz graal self_optim no_self_osr hard
-bench_map.oz graal self_optim hard
-bench_map.oz mozart2 hard
