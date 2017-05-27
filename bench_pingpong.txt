@@ -1,0 +1,14 @@
+% pingpong -- OK!
+
+#pingpong bench_pingpong.oz
+
+#medium pingpong_medium
+#hard pingpong_hard
+
+pingpong medium mozart1
+pingpong medium graal
+!pingpong medium graal -Xmx100m !freeslots
+
+pingpong hard mozart1
+pingpong hard graal
+pingpong hard graal -Xmx100m

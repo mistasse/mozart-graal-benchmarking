@@ -4,6 +4,7 @@
 #mozart2 _mozart2 time.oz
 
 #%gc -verbose:gc
+#!%gc
 #%clean -Doz.serializer=false
 #!%clean -Doz.serializer=true
 #%nlinks -Doz.print.nlinks=true
@@ -21,20 +22,38 @@
 #direct  -Doz.vars.direct=true
 #!direct -Doz.vars.direct=false
 
-#+filter -Doz.vars.filtering=true
+#inlining  -Doz.calltargets.cache=3
+#!inlining -Doz.calltargets.cache=0
+
+#freeslots  -Doz.free.slots=true
+#!freeslots -Doz.free.slots=false
+
+#filter  -Doz.vars.filtering=true
 #!filter -Doz.vars.filtering=false
 
-#high_osr -Dgraal
+#high_osr -Dgraal.TruffleOSRCompilationThreshold=100000
 #low_osr  -Dgraal.TruffleOSRCompilationThreshold=1000
+
+#profile -Dgraal.TruffleProfilingEnabled=true
+#!profile -Dgraal.TruffleProfilingEnabled=false
 
 #recinlining
 #!recinlining -Dgraal.TruffleMaximumRecursiveInlining=0
+
+#split_builtins  -Doz.builtins.split=true
+#!split_builtins -Doz.builtins.split=false
 
 #self_optim  -Doz.tail.selfcalls=true
 #!self_optim -Doz.tail.selfcalls=false
 
 #self_osr  -Doz.tail.selfcalls.osr=true
 #!self_osr -Doz.tail.selfcalls.osr=false
+
+#tail_optim  -Doz.tail.calls=true
+#!tail_optim -Doz.tail.calls=false
+
+#tail_osr  -Doz.tail.calls.osr=true
+#!tail_osr -Doz.tail.calls.osr=false
 
 #unlink  -Doz.free.links=true
 #!unlink -Doz.free.links=false

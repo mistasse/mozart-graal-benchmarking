@@ -62,7 +62,7 @@ def to_list(dic, label, sections=None):
 
 
 def nano_mat(lst):
-    length = max(len(l) for l in lst)
+    length = max((len(l) for l in lst), default=0)
     for l in lst:
         if len(l) != length:
             l += [float("nan")] * (length-len(l))
@@ -127,8 +127,10 @@ class SubSerie:
         self.mat = mat
         self.sections = sections
 
-    def sub(self, *args, **kwargs):
-        plt.subplot(*args, **kwargs)
+    def sub(self, *args, init_axis=None, **kwargs):
+        ax = plt.subplot(*args, **kwargs)
+        if init_axis is not None:
+            init_axis.append(ax)
         return self
 
     def grid(self):
@@ -136,9 +138,15 @@ class SubSerie:
         return self
 
     @noop_nosections()
-    def plot(self, sections=None, *, legend=1, xscale=None, yscale="log"):
+    def plot(self, sections=None, *, init_axis=None, legend=1, xlabel=None, ylabel=None, xscale=None, yscale="log"):
         for m in self.mat:
-            plt.plot(m)
+            ax = plt.plot(m)
+            if init_axis is not None:
+                init_axis.append(ax)
+        if xlabel is not None:
+            plt.xlabel(xlabel)
+        if ylabel is not None:
+            plt.ylabel(ylabel)
         if xscale is not None:
             plt.xscale(xscale)
         if yscale is not None:

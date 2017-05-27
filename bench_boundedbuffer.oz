@@ -62,7 +62,7 @@ define
    
    In = thread {Producer 1} end
    Out = if `$BoundedBuffer` then {BoundedBuffer In 5} else In end
-   {`$Process` "active --- 0" 4*`$TimeUnit`}
+   {`$Process` "active --- 0" 2*`$TimeUnit`}
    {Consumer 1 Out `$It`}
    /*
    A = {NewCell 0}
@@ -78,6 +78,6 @@ define
    end
    */
    %{Delay 3000}
-   {Show "active --- -25"}
+   %{Show "active --- -25"}
    {Exit 0}
 end

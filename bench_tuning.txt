@@ -1,7 +1,7 @@
 #hot $Hot=true
 
 %%% BOUNDED BUFFER
-#boundedbuffer_default $It=20 $TimeUnit=50000
+#boundedbuffer_default $It=20 $TimeUnit=20000
 #boundedbuffer_buffered $BoundedBuffer=true
 #boundedbuffer_unbuffered $BoundedBuffer=false
 
@@ -32,6 +32,12 @@
 
 %%% NOTHING
 #nothing_default $It=50000
+
+%%% PING PONG
+#pingpong_medium $It=25 $N=2000000
+#pingpong_hard   $It=25 $N=4000000
+
+#pingpong_memfeedback $MemFB=500000
 
 %%% POW
 #pow_short $It=10000

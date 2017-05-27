@@ -6,13 +6,24 @@
 
 map easy mozart1
 map easy mozart2
-%map easy graal !self_optim
-%map easy graal self_optim !self_osr
+map easy graal !tail_optim
+map easy graal tail_optim !tail_osr
+map easy graal !self_optim
+map easy graal self_optim !self_osr
 map easy graal self_optim self_osr
 
-map hard mozart1
-map hard mozart2
+#%hard hard
+
+%map hard mozart1
+%map hard mozart2
+!map %hard graal !self_optim !tail_osr
+!map %hard graal !self_optim tail_osr
+!map %hard graal !self_optim tail_osr !inlining
+
+!map %hard graal self_optim !self_osr
+!map %hard graal self_optim self_osr
+!map %hard graal self_optim self_osr !inlining
 %map hard graal !self_optim
 %map hard graal self_optim !self_osr
-map hard graal self_optim self_osr
+%map hard graal self_optim self_osr
 
