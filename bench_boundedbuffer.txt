@@ -1,17 +1,27 @@
 % boundedbuffer -- OK!
+#%mozart1 mozart1
+
 #buffered boundedbuffer_buffered
 #unbuffered boundedbuffer_unbuffered
 #%wait boundedbuffer_!wait
 #wait boundedbuffer_wait
 
 #bounded_buffer bench_boundedbuffer.oz boundedbuffer_default
+#fastprod $ProdTime=1 $ConsTime=2 $InitTime=2
+#even     $ProdTime=1 $ConsTime=1 $InitTime=1
+#slowprod $ProdTime=2 $ConsTime=1 $InitTime=6
 
-bounded_buffer buffered mozart1
-%bounded_buffer buffered mozart2
-bounded_buffer buffered graal
-bounded_buffer buffered graal wait
+bounded_buffer buffered   fastprod mozart1
+bounded_buffer buffered   fastprod graal
+bounded_buffer buffered   fastprod graal wait
+bounded_buffer unbuffered fastprod %mozart1
 
-#%mozart1 mozart1
-bounded_buffer unbuffered %mozart1
-%bounded_buffer unbuffered mozart2
-%bounded_buffer unbuffered graal
+bounded_buffer buffered   even     mozart1
+bounded_buffer buffered   even     graal
+bounded_buffer buffered   even     graal wait
+bounded_buffer unbuffered even     %mozart1
+
+bounded_buffer buffered   slowprod mozart1
+bounded_buffer buffered   slowprod graal
+bounded_buffer buffered   slowprod graal wait
+bounded_buffer unbuffered slowprod %mozart1

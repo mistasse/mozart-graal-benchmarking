@@ -1,0 +1,19 @@
+% tailcalls -- OK!
+
+#% tailcalls_!vars
+#with_dataflow tailcalls_vars
+
+% It takes a long time to Graal before compiling Add
+%!tailcalls graal !self_optim !tail_osr $It=1000000 $N=1 --trace !recinlining
+
+#no_self_optim !self_optim
+#with_self_optim self_optim
+#no_osr !tail_osr !self_osr
+#with_osr tail_osr self_osr
+#with_inlining inlining
+#no_inlining !inlining
+#Add tailcalls
+
+Add %i graal no_self_optim no_osr no_inlining %
+Add %i graal no_self_optim with_osr no_inlining %
+Add %i graal no_self_optim with_osr inlining %

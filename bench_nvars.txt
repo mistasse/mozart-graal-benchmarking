@@ -1,27 +1,33 @@
 % nvars
+#project2014 ../OzProjet2014/myFunctor.oz ~cwd=../OzProjet2014
 
-#project2014.oz ../OzProjet2014/myFunctor.oz ~cwd=../OzProjet2014
+project2014 graal %nvars
+project2014 graal patdirect !direct %nvars
+project2014 graal !patdirect !direct %nvars
 
-%project2014.oz graal %nvars %clean
-%project2014.oz graal no_direct %nvars %clean
+#tailcalls tailcalls tailcalls_vars
 
-bench_flatten.oz feasy %nvars %clean
-bench_flatten.oz feasy no_direct %nvars %clean
+#flatten_easy bench_flatten.oz flatten_easy
+#flatten_hard bench_flatten.oz flatten_hard
+flatten_easy graal %nvars
+flatten_easy graal patdirect !direct %nvars
+flatten_easy graal !patdirect !direct %nvars
 
-bench_flatten.oz graal fhard %nvars %clean
-bench_flatten.oz graal fhard no_direct %nvars %clean
+flatten_hard graal %nvars
+flatten_hard graal patdirect !direct %nvars
+flatten_hard graal !patdirect !direct %nvars
 
-bench_pow.oz p10000 %nvars %clean
-bench_pow.oz p10000 no_direct %nvars %clean
+#map_easy bench_map.oz map_easy
+#map_hard bench_map.oz map_hard
+map_easy graal %nvars
+map_easy graal patdirect !direct %nvars
+map_easy graal !patdirect !direct %nvars
 
-bench_pow.oz graal p100000 %nvars %clean
-bench_pow.oz graal p100000 no_direct %nvars %clean
+map_hard graal %nvars
+map_hard graal patdirect !direct %nvars
+map_hard graal !patdirect !direct %nvars
 
-bench_map.oz measy %nvars %clean
-bench_map.oz measy no_direct %nvars %clean
-
-bench_map.oz graal mhard %nvars %clean
-bench_map.oz graal mhard no_direct %nvars %clean
-
-bench_nothing.oz %nvars %clean
-bench_nothing.oz no_direct %nvars %clean
+#nothing bench_nothing.oz
+nothing graal %nvars
+nothing graal patdirect !direct %nvars
+nothing graal !patdirect !direct %nvars

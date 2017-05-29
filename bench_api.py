@@ -23,9 +23,9 @@ __all__ = [
 ]
 
 
-def get_log(serie, n=0):
+def get_log(serie, n=0, prefix="last"):
     n = str(n) if n > 0 else ""
-    with open(Options.resdir+"last_"+serie+"/output{}.txt".format(n), "r") as f:
+    with open(Options.resdir+prefix+"_"+serie+"/output{}.txt".format(n), "r") as f:
         return f.read().splitlines()
 
 
@@ -92,12 +92,12 @@ def first(lst):
 
 
 class Serie:
-    def __init__(self, serie, n=0):
+    def __init__(self, serie, n=0, prefix="last"):
         self.n = n
         if isinstance(n, int):
-            self.serie = [extract(get_log(serie, n))]
+            self.serie = [extract(get_log(serie, n, prefix))]
         else:
-            self.serie = [extract(get_log(serie, i)) for i in n]
+            self.serie = [extract(get_log(serie, i, prefix)) for i in n]
 
     def get(self, label, sections=None, *, conv=nano_mat, agg=first):
         if isinstance(label, tuple):

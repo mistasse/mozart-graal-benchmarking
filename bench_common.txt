@@ -3,6 +3,7 @@
 #mozart1 _mozart1 time.oz
 #mozart2 _mozart2 time.oz
 
+#%i --igv --trace
 #%gc -verbose:gc
 #!%gc
 #%clean -Doz.serializer=false
@@ -12,7 +13,7 @@
 #%nvars -Doz.print.nvars=true
 #!%nvars
 
-#graal --graal -Doz.frames.cache=0 %clean
+#graal --graal %clean
 #!graal
 #truffle
 
@@ -22,8 +23,11 @@
 #direct  -Doz.vars.direct=true
 #!direct -Doz.vars.direct=false
 
-#inlining  -Doz.calltargets.cache=3
-#!inlining -Doz.calltargets.cache=0
+#patdirect  -Doz.patvars.direct=true
+#!patdirect -Doz.patvars.direct=false
+
+#inlining  -Doz.frames.cache=1 -Doz.calltargets.cache=3
+#!inlining -Doz.frames.cache=0 -Doz.calltargets.cache=0
 
 #freeslots  -Doz.free.slots=true
 #!freeslots -Doz.free.slots=false
@@ -40,8 +44,8 @@
 #recinlining
 #!recinlining -Dgraal.TruffleMaximumRecursiveInlining=0
 
-#split_builtins  -Doz.builtins.split=true
-#!split_builtins -Doz.builtins.split=false
+#splitting  -Doz.builtins.split=true
+#!splitting -Doz.builtins.split=false
 
 #self_optim  -Doz.tail.selfcalls=true
 #!self_optim -Doz.tail.selfcalls=false

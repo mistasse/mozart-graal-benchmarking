@@ -1,7 +1,7 @@
 #hot $Hot=true
 
 %%% BOUNDED BUFFER
-#boundedbuffer_default $It=20 $TimeUnit=20000
+#boundedbuffer_default $It=20 $TimeUnit=20000 $InitTime=2 $ProdTime=1 $ConsTime=2
 #boundedbuffer_buffered $BoundedBuffer=true
 #boundedbuffer_unbuffered $BoundedBuffer=false
 
@@ -19,7 +19,7 @@
 
 %%% MAP
 #map_easy $N=100000  $It=50  $Name=easy
-#map_hard $N=1000000 $It=100 $Name=hard
+#map_hard $N=1000000 $It=50  $Name=hard
 #map_base
 #map_pat  $Map=MapPat
 #map_feat $Map=MapFeat
@@ -31,13 +31,18 @@
 #methods_direct   $Name=direct      $Rec=a
 
 %%% NOTHING
-#nothing_default $It=50000
+#nothing_default $It=50000 $It=50
 
 %%% PING PONG
 #pingpong_medium $It=25 $N=2000000
 #pingpong_hard   $It=25 $N=4000000
 
 #pingpong_memfeedback $MemFB=500000
+
+%%% PROJECT
+#project2014 ../OzProjet2014/myFunctor.oz ~cwd=../OzProjet2014/
+#project2014_joie $Partition=joie.dj.oz
+#project2014_strugala $Partition=sheets/strugala.dj.oz
 
 %%% POW
 #pow_short $It=10000
@@ -53,3 +58,9 @@
 
 #sieve_!sqrtopt $SqrtOpt=false
 #sieve_sqrtopt $SqrtOpt=true
+
+%%% TAIL CALLS
+#tailcalls bench_tailcalls.oz
+#tailcalls_!vars $A1=A-1 $B1=B-1
+#tailcalls_vars $LocalVars=true
+

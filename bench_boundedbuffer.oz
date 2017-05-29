@@ -1,13 +1,16 @@
 functor
 import
    Application(exit:Exit)
-   MTime(time:Time diff:Diff) at 'time.ozf'
+   %MTime(time:Time diff:Diff) at 'time.ozf'
    System(showInfo:Show)
 define
    `$It`=20
    `$TimeUnit`=50000
    `$BoundedBuffer`=true
    `$Process`=Process
+   `$ConsTime`=2
+   `$ProdTime`=1
+   `$InitTime`=2
    fun {BoundedBuffer In N}
       End=thread {List.drop In N} end
       fun lazy {Loop In End}
@@ -41,7 +44,7 @@ define
    
    fun lazy {Producer I}
       if true then
-         {`$Process` "active --- "#I `$TimeUnit`}
+         {`$Process` "active --- "#I `$ProdTime`*`$TimeUnit`}
       else
          {`$Process` "active --- "#I 1}
       end
@@ -54,7 +57,7 @@ define
       else
          {`$Process` "active --- -"#X 1}
          case In of I|In2 then
-            {`$Process` "active --- -"#I 2*`$TimeUnit`}
+            {`$Process` "active --- -"#I `$ConsTime`*`$TimeUnit`}
             {Consumer X+1 In2 N-1}
          end
       end
@@ -62,22 +65,7 @@ define
    
    In = thread {Producer 1} end
    Out = if `$BoundedBuffer` then {BoundedBuffer In 5} else In end
-   {`$Process` "active --- 0" 2*`$TimeUnit`}
+   {`$Process` "active --- 0" `$InitTime`*`$TimeUnit`}
    {Consumer 1 Out `$It`}
-   /*
-   A = {NewCell 0}
-   for R in 1..`$It` do
-      local
-         T0 T1
-      in
-         T0={Time}
-
-         T1={Time}
-         {Show `$It`#" --- "#({Diff T0 T1})}
-      end
-   end
-   */
-   %{Delay 3000}
-   %{Show "active --- -25"}
    {Exit 0}
 end

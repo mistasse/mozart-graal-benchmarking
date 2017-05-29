@@ -25,7 +25,10 @@ class Options:
 
 
 def run(cmd, **kwargs):
-    p = subprocess.run(cmd, stdout=subprocess.PIPE, **kwargs)
+    output = subprocess.PIPE if kwargs.pop("stdout", True) else None
+    def do():
+        return subprocess.run(cmd, stdout=subprocess.PIPE, **kwargs)
+    p = do()
     if p.returncode != 0:
         if not Args.tryagain and not Args.skiperrors:
             print(decode(p.stdout))
@@ -34,7 +37,7 @@ def run(cmd, **kwargs):
         while Args.tryagain and p.returncode != 0:
             print(decode(p.stdout))
             print("Error, trying again")
-            p = subprocess.run(cmd, stdout=subprocess.PIPE, **kwargs)
+            p = do()
     return p.stdout.splitlines()
 
 
@@ -187,7 +190,7 @@ class TestSuite:
                     ))
                     reportfile.flush()
 
-        subprocess.run(["ln", "-fsn", self.dirname, Options.resdir+"last_"+self.name])
+        subprocess.run(["ln", "-fsn", self.dirname, Options.resdir+Args.prefix+"_"+self.name])
 
 
 class Result(namedtuple("Result", "title, output")):
@@ -198,6 +201,7 @@ if __name__ == "__main__":
     parser.add_argument("-n", type=int, default=1, help="the number of times to execute the benchmark")
     parser.add_argument("-s", "--skiperrors", action="store_true", help="continue executing though there were errors")
     parser.add_argument("-t", "--tryagain", action="store_true", help="try executing again while there are errors")
+    parser.add_argument("-p", "--prefix", default="last", help="the symbolic link to update")
     Args = parser.parse_args()
 
     lines = sys.stdin.read().splitlines()
