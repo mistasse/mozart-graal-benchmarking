@@ -2,7 +2,7 @@ functor
 import
    Application(exit:Exit)
    MTime(time:Time diff:Diff) at 'time.ozf'
-   System(showInfo:Show)
+   System(showInfo:Show show:Show_)
 define
     local
        fun {DoFlatten Xs Start End}
@@ -31,25 +31,27 @@ define
    end
    `$N` = 100
    `$It` = 100
+   `$AN` = 3
    `$BN` = 3
    `$CN` = 3
    `$DN` = 3
    `$EN` = 3
    `$Hot` = false
-   A = {Times x `$N`}
+   A = {Times x `$AN`}
    B = {Times A `$BN`}
    C = {Times B `$CN`}
    D = {Times C `$DN`}
    E = {Times D `$EN`}
    `$Depth` = C
    `$Name` = ""
+   L = {Times `$Depth` `$N`}
 
    for R in 1..`$It` do
       local
          T0 T1
       in
          T0={Time}
-         _ = {`$Flatten` `$Depth`}
+         _ = {`$Flatten` L}
          T1={Time}
          {Show `$Name`#" --- "#{Diff T0 T1}}
       end

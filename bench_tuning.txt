@@ -61,6 +61,6 @@
 
 %%% TAIL CALLS
 #tailcalls bench_tailcalls.oz
-#tailcalls_!vars $A1=A-1 $B1=B-1
-#tailcalls_vars $LocalVars=true
+#tailcalls_!vars $A1=A-1 $B1=B-1 $LocalVars=/*
+#tailcalls_vars $LocalVars=%
 

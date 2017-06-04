@@ -1,0 +1,22 @@
+% unifequal -- OK!
+
+#equality bench_unifequal.oz $X=X $Y=Z $Op===
+#unification bench_unifequal.oz $X=Z $Y=Z $Op==
+
+#setresize   $Y=Y
+
+#no_cycle_detection   !cycledetection
+#threshold_unexceeded cycledetection  -Doz.cycles.threshold=100
+#threshold_exceeded   cycledetection  -Doz.cycles.threshold=10
+#% $It=1000 $N=10000 low_osr
+#%graal graal
+
+unification %graal no_cycle_detection %
+unification %graal threshold_unexceeded %
+unification %graal threshold_exceeded %
+%unification graal threshold_exceeded %
+
+equality %graal no_cycle_detection %
+equality %graal threshold_unexceeded %
+equality %graal threshold_exceeded %
+%equality graal threshold_exceeded setresize %

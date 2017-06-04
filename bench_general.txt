@@ -1,0 +1,26 @@
+#Add bench_tailcalls.oz tailcalls_!vars $It=100 $N=1000000
+#Map bench_map.oz $It=100 $N=1000000
+#Flatten bench_flatten.oz $Name='' $It=100 $N=1000 $Depth=E
+#PingPong bench_pingpong.oz $It=100 $N=250000
+#Sieve bench_sieve.oz $It=100 $N=10000 $SqrtOpt=false
+#Project2014 ../OzProjet2014/myFunctor.oz ~cwd=../OzProjet2014/ $N=10
+
+#%options graal %i
+#with_selection filter
+#no_selection !filter
+#with_clearing freeslots
+#no_clearing !freeslots
+#big $It=1000
+
+Add         %options
+Add         big %options
+Map         %options
+Map         big %options
+Flatten     %options
+Flatten     big %options
+PingPong    %options
+PingPong    big %options
+Sieve       %options
+Sieve       big %options
+Project2014 %options
+Project2014 big %options

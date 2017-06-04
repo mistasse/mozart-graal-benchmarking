@@ -4,13 +4,18 @@
 #mozart1 mozart1 Projet2014.oz
 #mozart2 mozart2 Projet2014.oz
 
-#project2014 project2014 $N=10
+#Project2014 project2014 $N=10
 #joie project2014_joie
 #strugala project2014_strugala
 
-!project2014 mozart2
-!project2014 mozart1
-!project2014 graal
+!Project2014 mozart1 joie
+!Project2014 mozart2 joie
+!Project2014 graal   joie
+
+!Project2014 mozart1 strugala
+!Project2014 mozart2 strugala
+!Project2014 graal   strugala
+project2014 graal !filter 
 project2014 graal !filter 
 project2014 graal !direct unlink
 project2014 graal direct unlink

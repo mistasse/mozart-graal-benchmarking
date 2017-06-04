@@ -1,5 +1,6 @@
 % tailcalls -- OK!
 
+#Project2014 ../OzProjet2014/myFunctor.oz ~cwd=../OzProjet2014/ $N=10
 #% tailcalls_!vars
 #with_dataflow tailcalls_vars
 
@@ -12,12 +13,24 @@
 #with_osr tail_osr self_osr
 #Add tailcalls
 
-Add mozart1 %
-Add mozart2 %
+%#%i
+%Add mozart1 %
+%Add mozart2 %
 Add %i graal no_self_optim no_osr %
 Add %i graal no_self_optim with_osr %
 Add %i graal with_self_optim no_osr %
 Add %i graal with_self_optim with_osr %
-Add %i graal with_self_optim with_osr % 
-Add %i graal with_self_optim with_osr with_dataflow
 
+% Uncomment to see the graph using dataflow
+%Add %i graal with_self_optim with_osr with_dataflow
+
+Project2014 graal no_self_optim no_osr %
+Project2014 graal no_self_optim with_osr %
+Project2014 graal with_self_optim no_osr %
+Project2014 graal with_self_optim with_osr %
+
+#method $Method=add
+#otherwise $Method=iadd
+!Add graal no_self_optim with_osr % %i
+!Add graal method % $It=1000 %i
+!Add graal otherwise % $It=1000 %i

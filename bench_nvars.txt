@@ -1,33 +1,38 @@
 % nvars
-#project2014 ../OzProjet2014/myFunctor.oz ~cwd=../OzProjet2014
+#Add bench_tailcalls.oz tailcalls_!vars $It=100 $N=2000000
+#Map bench_map.oz $It=100 $N=1000000
+#Flatten bench_flatten.oz $Name='' $It=100 $N=1000 $Depth=E
+#PingPong bench_pingpong.oz $It=100 $N=250000
+#Sieve bench_sieve.oz $It=100 $N=10000 $SqrtOpt=false
+#Project2014 ../OzProjet2014/myFunctor.oz ~cwd=../OzProjet2014/ $N=10 $N=1
+#LoadBase bench_loadbase.oz
 
-project2014 graal %nvars
-project2014 graal patdirect !direct %nvars
-project2014 graal !patdirect !direct %nvars
+#%nvars %nvars $It=1
 
-#tailcalls tailcalls tailcalls_vars
+Add graal %nvars
+Add graal patdirect !direct %nvars
+Add graal !patdirect !direct %nvars
 
-#flatten_easy bench_flatten.oz flatten_easy
-#flatten_hard bench_flatten.oz flatten_hard
-flatten_easy graal %nvars
-flatten_easy graal patdirect !direct %nvars
-flatten_easy graal !patdirect !direct %nvars
+Map graal %nvars
+Map graal patdirect !direct %nvars
+Map graal !patdirect !direct %nvars
 
-flatten_hard graal %nvars
-flatten_hard graal patdirect !direct %nvars
-flatten_hard graal !patdirect !direct %nvars
+Flatten graal %nvars
+Flatten graal patdirect !direct %nvars
+Flatten graal !patdirect !direct %nvars
 
-#map_easy bench_map.oz map_easy
-#map_hard bench_map.oz map_hard
-map_easy graal %nvars
-map_easy graal patdirect !direct %nvars
-map_easy graal !patdirect !direct %nvars
+PingPong graal %nvars
+PingPong graal patdirect !direct %nvars
+PingPong graal !patdirect !direct %nvars
 
-map_hard graal %nvars
-map_hard graal patdirect !direct %nvars
-map_hard graal !patdirect !direct %nvars
+Sieve graal %nvars
+Sieve graal patdirect !direct %nvars
+Sieve graal !patdirect !direct %nvars
 
-#nothing bench_nothing.oz
-nothing graal %nvars
-nothing graal patdirect !direct %nvars
-nothing graal !patdirect !direct %nvars
+Project2014 graal %nvars
+Project2014 graal patdirect !direct %nvars
+Project2014 graal !patdirect !direct %nvars
+
+LoadBase graal %nvars
+LoadBase graal patdirect !direct %nvars
+LoadBase graal !patdirect !direct %nvars

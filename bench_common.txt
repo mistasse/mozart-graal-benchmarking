@@ -20,6 +20,9 @@
 #cache  -Doz.reads.cache=true
 #!cache -Doz.reads.cache=false
 
+#cycledetection  -Doz.cycles=true
+#!cycledetection -Doz.cycles=false
+
 #direct  -Doz.vars.direct=true
 #!direct -Doz.vars.direct=false
 
@@ -36,7 +39,7 @@
 #!filter -Doz.vars.filtering=false
 
 #high_osr -Dgraal.TruffleOSRCompilationThreshold=100000
-#low_osr  -Dgraal.TruffleOSRCompilationThreshold=1000
+#low_osr  -Dgraal.TruffleOSRCompilationThreshold=10
 
 #profile -Dgraal.TruffleProfilingEnabled=true
 #!profile -Dgraal.TruffleProfilingEnabled=false

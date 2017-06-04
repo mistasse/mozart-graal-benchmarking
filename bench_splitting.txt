@@ -1,0 +1,23 @@
+#Add bench_tailcalls.oz tailcalls_!vars $It=100 $N=1000000
+#Map bench_map.oz $It=100 $N=1000000
+#Flatten bench_flatten.oz $Name='' $It=100 $N=1000 $Depth=E
+#PingPong bench_pingpong.oz $It=100 $N=250000
+#Sieve bench_sieve.oz $It=100 $N=10000 $SqrtOpt=false
+#Project2014 ../OzProjet2014/myFunctor.oz ~cwd=../OzProjet2014/ $N=10
+
+#%options graal !self_optim
+#with_splitting  splitting
+#no_splitting   !splitting
+
+Add           no_splitting %options
+Add         with_splitting %options
+Map           no_splitting %options
+Map         with_splitting %options
+Flatten       no_splitting %options
+Flatten     with_splitting %options
+PingPong      no_splitting %options
+PingPong    with_splitting %options
+Sieve         no_splitting %options
+Sieve       with_splitting %options
+Project2014   no_splitting %options
+Project2014 with_splitting %options

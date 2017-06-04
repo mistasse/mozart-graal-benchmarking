@@ -1,4 +1,5 @@
 from collections import defaultdict, OrderedDict
+from itertools import takewhile
 
 from matplotlib import pyplot as plt
 import numpy as np
@@ -18,7 +19,10 @@ __all__ = [
     "nano_mat",
 
     "mean",
+    "appended",
+    "aggmin",
     "geomean",
+    "halfright_appended",
     "first",
 ]
 
@@ -79,6 +83,40 @@ def mean(lst):
         s += l
     return s / len(lst)
 
+def aggmin(lst):
+    v = lst[0]
+    for w in lst[1:]:
+        v = min(v, w)
+    return v
+
+def appended(series):
+    lst = [[] for i in range(len(series[0]))]
+    for serie in series:
+        for i, l in enumerate(serie):
+            l = list(takewhile(lambda x: not np.isnan(x), l))
+            lst[i].extend(l)
+
+    length = max((len(l) for l in lst), default=0)
+    for l in lst:
+        if len(l) != length:
+            l += [float("nan")] * (length-len(l))
+    return np.array(lst)
+
+
+def halfright_appended(series):
+    lst = [[] for i in range(len(series[0]))]
+    for serie in series:
+        for i, l in enumerate(serie):
+            l = list(takewhile(lambda x: not np.isnan(x), l))
+            l = l[len(l)//2:]
+            lst[i].extend(l)
+
+    length = max((len(l) for l in lst), default=0)
+    for l in lst:
+        if len(l) != length:
+            l += [float("nan")] * (length-len(l))
+    return np.array(lst)
+
 
 def geomean(lst):
     s = lst[0]
@@ -128,21 +166,16 @@ class SubSerie:
         self.sections = sections
 
     def sub(self, *args, init_axis=None, **kwargs):
-        ax = plt.subplot(*args, **kwargs)
+        self.ax = plt.subplot(*args, **kwargs)
         if init_axis is not None:
-            init_axis.append(ax)
+            init_axis.append(self.ax)
         return self
 
     def grid(self):
         plt.grid()
         return self
 
-    @noop_nosections()
-    def plot(self, sections=None, *, init_axis=None, legend=1, xlabel=None, ylabel=None, xscale=None, yscale="log"):
-        for m in self.mat:
-            ax = plt.plot(m)
-            if init_axis is not None:
-                init_axis.append(ax)
+    def _plot(self, *, sections=None, xlabel=None, ylabel=None, xscale=None, yscale=None, legend=None):
         if xlabel is not None:
             plt.xlabel(xlabel)
         if ylabel is not None:
@@ -156,7 +189,25 @@ class SubSerie:
         return self
 
     @noop_nosections()
-    def hist(self, sections=None, *, yscale="log", legend=1, bins=None, stacked=False):
+    def boxplot(self, sections=None, *, yscale="log", legend=0, **kwargs):
+        data = []
+        for lst in self.mat:
+            x = np.array(lst)
+            data.append(x[~np.isnan(x)])
+        plt.boxplot(data, medianprops = dict(linewidth=2.5, color='black'))
+        self.ax.set_xticklabels(sections if sections is not None else self.sections)
+        return self._plot(sections=sections, yscale=yscale, **kwargs)
+
+    @noop_nosections()
+    def plot(self, sections=None, *, init_axis=None, legend=1, yscale="log", **kwargs):
+        for m in self.mat:
+            ax = plt.plot(m)
+            if init_axis is not None:
+                init_axis.append(ax)
+        return self._plot(sections=sections, yscale=yscale, legend=legend, **kwargs)
+
+    @noop_nosections()
+    def hist(self, sections=None, *, yscale="log", legend=1, bins=None, stacked=False, **kwargs):
         min_, max_ = min(self.mat[0]), max(self.mat[0])
         for m in self.mat:
             mi, ma = min(m), max(m)
@@ -171,10 +222,10 @@ class SubSerie:
             plt.yscale(yscale)
         if legend is not None:
             plt.legend(sections if sections is not None else self.sections, loc=legend)
-        return self
+        return self._plot(sections=sections, yscale=yscale, legend=legend, **kwargs)
 
     @noop_nosections()
-    def prog(self, sections=None, *, legend=9, yscale=None):
+    def prog(self, sections=None, *, legend=None, yscale=None, **kwargs):
         cumtime = np.cumsum(self.mat, axis=1)
         y = np.cumsum(np.ones((cumtime.shape[1])))
         for x in cumtime:
@@ -183,11 +234,15 @@ class SubSerie:
             plt.yscale(yscale)
         if legend is not None:
             plt.legend(sections if sections is not None else self.sections, loc=legend)
-        return self
+        return self._plot(sections=sections, legend=legend, yscale=yscale, **kwargs)
 
     @noop_nosections(result=np.array([]))
     def agg(self, f):
         return f(self.mat, axis=1)
+
+    def peak_time(self):
+        n = self.mat.shape[1]
+        return np.mean(self.mat[:,n//2:], axis=1)
 
     def show(self):
         plt.show()

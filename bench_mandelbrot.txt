@@ -1,0 +1,9 @@
+% mandelbrot
+
+#mandelbrot bench_mandelbrot.oz
+#mandelbrot_loop bench_mandelbrot2.oz
+
+!mandelbrot graal
+mandelbrot_loop graal
+mandelbrot mozart2
+

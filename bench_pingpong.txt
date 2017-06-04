@@ -1,14 +1,8 @@
 % pingpong -- OK!
 
-#pingpong bench_pingpong.oz
+#PingPong bench_pingpong.oz $It=1 $N=1000000
 
-#medium pingpong_medium
-#hard pingpong_hard
+PingPong !self_optim %gc
+PingPong -Xmx75m !self_optim freeslots %gc
+PingPong -Xmx75m !self_optim !freeslots %gc
 
-pingpong medium mozart1
-pingpong medium graal
-!pingpong medium graal -Xmx100m !freeslots
-
-pingpong hard mozart1
-pingpong hard graal
-pingpong hard graal -Xmx100m

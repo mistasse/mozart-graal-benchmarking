@@ -5,9 +5,11 @@ import
    System(showInfo:Show)
    Property(get:GetProperty)
 define
-   `$It` = 25
-   `$N` = 2000000 % Iterations
+   `$It` = 1
+   `$N` = 250000 % Iterations
    `$MemFB` = 500000 % Iterations per memory feedback
+   `$Ping`=Ping
+   `$Pong`=Pong
 
    proc {Ping S I}
       if I == 0 then
@@ -26,10 +28,21 @@ define
       else
          case S of ping|A then
             A = pong|_
+            {Pong A.2 I-1}
+         end
+      end
+   end
+
+   fun {PongMem S I}
+      if I == 0 then
+         unit
+      else
+         case S of ping|A then
+            A = pong|_
             if (I mod `$MemFB`) == 0 then
                {Show "memory --- "#{GetProperty 'gc.size'}}
             end
-            {Pong A.2 I-1}
+            {PongMem A.2 I-1}
          end
       end
    end
@@ -40,11 +53,11 @@ define
          T0 T1
          S = ping|_
       in
-         thread {Ping S.2 `$N`} end
+         thread {`$Ping` S.2 `$N`} end
          T0={Time}
-         A := {Pong S `$N`}
+         A := {`$Pong` S `$N`}
          T1={Time}
-         {Show "iteration --- "#({Diff T0 T1})}
+         {Show " --- "#({Diff T0 T1})}
       end
    end
    {Exit 0}

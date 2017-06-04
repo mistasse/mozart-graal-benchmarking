@@ -1,19 +1,23 @@
-% tailcalls -- OK!
+#Add bench_tailcalls.oz tailcalls_!vars $It=100 $N=1000000
+#Map bench_map.oz $It=100 $N=1000000
+#Flatten bench_flatten.oz $Name='' $It=100 $N=1000 $Depth=E
+#PingPong bench_pingpong.oz $It=100 $N=250000
+#Sieve bench_sieve.oz $It=100 $N=10000 $SqrtOpt=false
+#Project2014 ../OzProjet2014/myFunctor.oz ~cwd=../OzProjet2014/ $N=10
 
-#% tailcalls_!vars
-#with_dataflow tailcalls_vars
-
-% It takes a long time to Graal before compiling Add
-%!tailcalls graal !self_optim !tail_osr $It=1000000 $N=1 --trace !recinlining
-
-#no_self_optim !self_optim
-#with_self_optim self_optim
-#no_osr !tail_osr !self_osr
-#with_osr tail_osr self_osr
+#%options graal !self_optim
 #with_inlining inlining
-#no_inlining !inlining
-#Add tailcalls
+#no_inlining   !inlining
 
-Add %i graal no_self_optim no_osr no_inlining %
-Add %i graal no_self_optim with_osr no_inlining %
-Add %i graal no_self_optim with_osr inlining %
+Add           no_inlining %options
+Add         with_inlining %options
+Map           no_inlining %options
+Map         with_inlining %options
+Flatten       no_inlining %options
+Flatten     with_inlining %options
+PingPong      no_inlining %options
+PingPong    with_inlining %options
+Sieve         no_inlining %options
+Sieve       with_inlining %options
+Project2014   no_inlining %options
+Project2014 with_inlining %options

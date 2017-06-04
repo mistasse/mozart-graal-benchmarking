@@ -177,6 +177,7 @@ class TestSuite:
 
     def run(self):
         self.init_files()
+        subprocess.run(["ln", "-fsn", self.dirname, Options.resdir+"doing_"+self.name])
         for i in range(Args.n):
             output_name = "output{}.txt".format(i) if i > 0 else "output.txt"
             with open(self.in_dir(output_name), "w") as reportfile:

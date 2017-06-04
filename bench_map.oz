@@ -42,7 +42,7 @@ define
   `$N` = 400
   `$It` = 1000
   `$Map` = Map
-  `$Name` = "default"
+  `$Name` = ""
   L = {Gen `$N`}
 
   A = {NewCell 0}
