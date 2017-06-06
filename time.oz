@@ -2,16 +2,22 @@ functor
 import
    OS
    Boot_Time at 'x-oz://boot/Time'
+   System(showInfo:ShowInfo)
+   Property(get:GetProperty)
 export
    time: Time
    diff: Diff
 define
    Time Diff
    BTime = Boot_Time
-
+   proc{Memory}
+      {ShowInfo "memory --- "#{GetProperty 'gc.size'}}
+   end
+   {Memory}
    if {HasFeature BTime getMonotonicTime} then
       Time = BTime.getMonotonicTime
       fun{Diff X Y}
+         {Memory}
          Y - X
       end
    else
@@ -25,6 +31,7 @@ define
       fun{Diff StdoutX StdoutY}
          OutX OutY
       in
+         {Memory}
          {OS.wait _ _}
          {OS.wait _ _}
          {OS.read StdoutX 30 OutX nil _}

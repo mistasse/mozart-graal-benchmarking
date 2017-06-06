@@ -24,13 +24,13 @@ Add %i graal with_self_optim with_osr %
 % Uncomment to see the graph using dataflow
 %Add %i graal with_self_optim with_osr with_dataflow
 
-Project2014 graal no_self_optim no_osr %
-Project2014 graal no_self_optim with_osr %
-Project2014 graal with_self_optim no_osr %
-Project2014 graal with_self_optim with_osr %
+!Project2014 graal no_self_optim no_osr %
+!Project2014 graal no_self_optim with_osr %
+!Project2014 graal with_self_optim no_osr %
+!Project2014 graal with_self_optim with_osr %
 
 #method $Method=add
 #otherwise $Method=iadd
-!Add graal no_self_optim with_osr % %i
-!Add graal method % $It=1000 %i
-!Add graal otherwise % $It=1000 %i
+Add graal % $It=100
+Add graal method % $It=100
+Add graal otherwise % $It=100

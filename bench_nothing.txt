@@ -1,6 +1,6 @@
 % nothing -- OK!
 
-#bench_nothing bench_nothing.oz nothing_default
+#bench_nothing bench_nothing.oz $It=1000
 
 bench_nothing mozart1
 bench_nothing mozart2

@@ -5,7 +5,7 @@ import
    System(showInfo:Show)
    Browser(browse:Browse)
 define
-   `$It` = 50
+   `$It` = 1000
    A = {NewCell 0}
    for R in 1..`$It` do
       local
@@ -14,7 +14,7 @@ define
          T0={Time}
          A := nil
          T1={Time}
-         {Show `$It`#" --- "#({Diff T0 T1})}
+         {Show " --- "#({Diff T0 T1})}
       end
    end
    {Exit 0}

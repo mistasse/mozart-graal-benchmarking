@@ -1,26 +1,43 @@
-% nlinks
+% nvars
+#Add bench_tailcalls.oz tailcalls_!vars $It=100 $N=2000000
+#Map bench_map.oz $It=100 $N=1000000
+#Flatten bench_flatten.oz $Name='' $It=100 $N=1000 $Depth=E
+#PingPong bench_pingpong.oz $It=100 $N=250000
+#Sieve bench_sieve.oz $It=100 $N=10000 $SqrtOpt=false
+#Project2014 ../OzProjet2014/myFunctor.oz ~cwd=../OzProjet2014/ $N=10 $N=1
+#LoadBase bench_loadbase.oz
 
-#project2014.oz ../OzProjet2014/myFunctor.oz ~cwd=../OzProjet2014
-#%nlinks %nlinks -Dgraal.TruffleMaximumRecursiveInlining=0
+#%nvars %nlinks $It=1
+#graal --graal
 
-pow graal
-#project2014 project2014.oz
-project2014 graal %nlinks
+LoadBase graal %nvars
+Add graal %nvars
+%Add graal patdirect !direct %nvars
+%Add graal !patdirect !direct %nvars
 
-#flatten bench_flatten.oz
-flatten feasy %nlinks
-flatten graal fhard %nlinks
+Map graal %nvars
+%Map graal patdirect !direct %nvars
+%Map graal !patdirect !direct %nvars
 
-#sieve bench_sieve.oz
-sieve graal %nlinks
+#depth
+#3 $Depth=C
+#5 $Depth=E
+Flatten depth 3 graal %nvars
+Flatten depth 5 graal %nvars
+%Flatten graal patdirect !direct %nvars
+%Flatten graal !patdirect !direct %nvars
 
-#pow bench_pow.oz
-pow p10000 %nlinks
-pow graal p100000 %nlinks
+PingPong graal %nvars
+%PingPong graal patdirect !direct %nvars
+%PingPong graal !patdirect !direct %nvars
 
-#map bench_map.oz
-map measy %nlinks
-map graal mhard %nlinks
+Sieve graal %nvars
+%Sieve graal patdirect !direct %nvars
+%Sieve graal !patdirect !direct %nvars
 
-#nothing bench_nothing.oz
-nothing %nlinks
+Project2014 graal %nvars
+%Project2014 graal patdirect !direct %nvars
+%Project2014 graal !patdirect !direct %nvars
+
+%LoadBase graal patdirect !direct %nvars
+%LoadBase graal !patdirect !direct %nvars

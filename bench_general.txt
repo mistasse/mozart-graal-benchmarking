@@ -1,26 +1,40 @@
-#Add bench_tailcalls.oz tailcalls_!vars $It=100 $N=1000000
+#Add bench_tailcalls.oz $It=100 $N=2000000
 #Map bench_map.oz $It=100 $N=1000000
 #Flatten bench_flatten.oz $Name='' $It=100 $N=1000 $Depth=E
 #PingPong bench_pingpong.oz $It=100 $N=250000
 #Sieve bench_sieve.oz $It=100 $N=10000 $SqrtOpt=false
 #Project2014 ../OzProjet2014/myFunctor.oz ~cwd=../OzProjet2014/ $N=10
 
-#%options graal %i
+#%options
 #with_selection filter
 #no_selection !filter
 #with_clearing freeslots
 #no_clearing !freeslots
-#big $It=1000
+#%mozartproject Projet2014.oz
 
-Add         %options
-Add         big %options
-Map         %options
-Map         big %options
-Flatten     %options
-Flatten     big %options
-PingPong    %options
-PingPong    big %options
-Sieve       %options
-Sieve       big %options
-Project2014 %options
-Project2014 big %options
+#joie $Partition=joie.dj.oz
+#strugala $Partition=strugala.dj.oz
+
+Add         mozart1 %options
+Add         mozart2 %options
+Add         graal   %options
+Map         mozart1 %options
+Map         mozart2 %options
+Map         graal   %options
+Flatten     mozart1 %options
+Flatten     mozart2 %options
+Flatten     graal   %options
+PingPong    mozart1 %options
+PingPong    mozart2 %options
+PingPong    graal   %options
+Sieve       mozart1 %options
+Sieve       mozart2 %options
+Sieve       graal   %options
+
+!Project2014 mozart1 joie %options %mozartproject
+!Project2014 mozart2 joie %options %mozartproject
+!Project2014 graal   joie %options
+
+!Project2014 mozart1 strugala %options %mozartproject
+!Project2014 mozart2 strugala %options %mozartproject
+!Project2014 graal   strugala %options
