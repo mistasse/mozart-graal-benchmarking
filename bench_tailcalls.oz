@@ -38,9 +38,7 @@ define
       if A == 0 then
          R = A
       else
-         `$LocalVars` in /*
-         `$A1` `$B1` in A-1=`$A1` B+1=`$B1` %*/
-         {Add `$A1` `$B1` R}
+         {Add A-1 B+1 R}
       end
    end
 

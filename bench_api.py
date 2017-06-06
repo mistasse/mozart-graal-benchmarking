@@ -1,5 +1,6 @@
 from collections import defaultdict, OrderedDict
 from itertools import takewhile
+import re
 
 from matplotlib import pyplot as plt
 import numpy as np
@@ -32,7 +33,19 @@ def get_log(serie, n=0, prefix="last"):
     with open(Options.resdir+prefix+"_"+serie+"/output{}.txt".format(n), "r") as f:
         return f.read().splitlines()
 
-
+comp_regex = re.compile(r"""\[truffle\] opt done\s*(?P<ast>.*?)\s*"""\
+                        r"""\|ASTSize\s*(\d+)/\s*(?P<astsize>\d+)\s*"""\
+                        r"""\|Time\s*(?P<time>\d+)\(\s*\d+\+\d+\s*\)ms\s*"""\
+                        r"""\|DirectCallNodes[^|]*"""\
+                        r"""\|GraalNodes[^|]*"""\
+                        r"""\|CodeSize\s*(?P<codesize>\d*)"""\
+                        #r"""|Time"""+
+                        #r"""|DirectCallNodes"""+
+                        #r"""|GraalNodes"""+
+                        #r"""|CodeSize"""+
+                        #r"""|CodeAddress"""+
+                        #r"""|Source"""+
+                        "")
 def extract(log):
     result = OrderedDict()
     current = None
@@ -42,6 +55,11 @@ def extract(log):
             section = " ".join(n for n in section.split(" ") if not n.startswith("%"))
             current = defaultdict(list)
             result[section] = current
+        elif line.startswith("[truffle] opt done"):
+            for k, v in comp_regex.match(line).groupdict().items():
+                if k.endswith("time") or k.endswith("size"):
+                    key, value = "_"+k, int(v)
+                    current[key] = current.get(key, 0)+value
         else:
             split = line.split(Options.measure, 1)
             if len(split) > 1:
@@ -76,6 +94,8 @@ def nano_mat(lst):
 def asis(lst):
     return lst
 
+def vector(lst):
+    return np.array(lst)
 
 def mean(lst):
     s = lst[0]

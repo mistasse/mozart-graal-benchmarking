@@ -1,0 +1,69 @@
+
+#Memory bench_memory.oz
+#record $Type=Record
+#3record $Type=LargeRecord
+#fullrecord $Type=FullRecord
+#list $Type=List
+
+#1 $Value=Int
+#atom $Value=Atom
+
+#4000 $Size=4000
+#8000 $Size=8000
+#12000 $Size=12000
+
+Memory list 8000 atom mozart1
+Memory list 8000 atom mozart2
+Memory list 8000 atom graal
+Memory list 12000 atom mozart1
+Memory list 12000 atom mozart2
+Memory list 12000 atom graal
+
+Memory list 8000 1 mozart1
+Memory list 8000 1 mozart2
+Memory list 8000 1 graal
+Memory list 12000 1 mozart1
+Memory list 12000 1 mozart2
+Memory list 12000 1 graal
+
+Memory record 8000 atom mozart1
+Memory record 8000 atom mozart2
+Memory record 8000 atom graal
+Memory record 12000 atom mozart1
+Memory record 12000 atom mozart2
+Memory record 12000 atom graal
+
+Memory record 8000 1 mozart1
+Memory record 8000 1 mozart2
+Memory record 8000 1 graal
+Memory record 12000 1 mozart1
+Memory record 12000 1 mozart2
+Memory record 12000 1 graal
+
+Memory 3record 8000 atom mozart1
+Memory 3record 8000 atom mozart2
+Memory 3record 8000 atom graal
+Memory 3record 12000 atom mozart1
+Memory 3record 12000 atom mozart2
+Memory 3record 12000 atom graal
+
+Memory 3record 8000 1 mozart1
+Memory 3record 8000 1 mozart2
+Memory 3record 8000 1 graal
+Memory 3record 12000 1 mozart1
+Memory 3record 12000 1 mozart2
+Memory 3record 12000 1 graal
+
+Memory fullrecord 8000 atom mozart1
+Memory fullrecord 8000 atom mozart2
+Memory fullrecord 8000 atom graal
+Memory fullrecord 12000 atom mozart1
+Memory fullrecord 12000 atom mozart2
+Memory fullrecord 12000 atom graal
+
+Memory fullrecord 8000 1 mozart1
+Memory fullrecord 8000 1 mozart2
+Memory fullrecord 8000 1 graal
+Memory fullrecord 12000 1 mozart1
+Memory fullrecord 12000 1 mozart2
+Memory fullrecord 12000 1 graal

@@ -8,6 +8,7 @@ import shutil
 import re
 import gc
 import argparse
+import time
 
 from tqdm import tqdm
 from datetime import datetime
@@ -173,7 +174,14 @@ class TestSuite:
             for pre_cmd in pre_commands:
                 run(pre_cmd)
 
-        return run(cmd, **kwargs)
+        while True:
+            try:
+                print("starting", cmd)
+                time.sleep(Args.wait)
+                return run(cmd, **kwargs)
+            except KeyboardInterrupt:
+                print("interrupted")
+                time.sleep(1)
 
     def run(self):
         self.init_files()
@@ -200,6 +208,7 @@ class Result(namedtuple("Result", "title, output")):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-n", type=int, default=1, help="the number of times to execute the benchmark")
+    parser.add_argument("-w", "--wait", type=float, default=1, help="type to sleep before running a command")
     parser.add_argument("-s", "--skiperrors", action="store_true", help="continue executing though there were errors")
     parser.add_argument("-t", "--tryagain", action="store_true", help="try executing again while there are errors")
     parser.add_argument("-p", "--prefix", default="last", help="the symbolic link to update")
